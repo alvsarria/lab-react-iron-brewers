@@ -1,15 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 const apiURL = "https://ih-beers-api2.herokuapp.com/beers/search?q=";
 
-function Search({setBeers}) {
+function Search({ setBeers }) {
   const [searchString, setSearchString] = useState();
 
   const handleSearch = (e) => {
-    setSearchString(e.target.value);
-    axios.get(`${apiURL}${searchString}`).then(response => setBeers(response.data)).catch(error => console.log(error))
+    const searchValue = e.target.value;
+    setSearchString(searchValue);
   };
+
+  useEffect(() => {
+    axios.get(`${apiURL}${searchString}`)
+      .then(response => setBeers(response.data))
+      .catch(error => console.log(error));
+  }, [setBeers, searchString])
 
   return (
     <div className="d-inline-flex justify-content-center align-items-center w-100 p-4">

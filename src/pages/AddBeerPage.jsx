@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const apiURL = "https://ih-beers-api2.herokuapp.com/beers/new"
@@ -13,6 +14,7 @@ function AddBeerPage() {
   const [brewersTips, setBrewersTips] = useState("");
   const [attenuationLevel, setAttenuationLevel] = useState(0);
   const [contributedBy, setContributedBy] = useState("");
+  const navigate = useNavigate()
 
   // Handler functions for the form inputs. You can leave these as they are.
   const handleName = (e) => setName(e.target.value);
@@ -39,7 +41,7 @@ function AddBeerPage() {
       contribute_by: contributedBy,
     }
 
-    axios.post(apiURL, requestBody).then(response => console.log(response)).catch(error => console.log(error))
+    axios.post(apiURL, requestBody).then(() => navigate("/beers")).catch(error => console.log(error))
   };
 
   // TASK:
